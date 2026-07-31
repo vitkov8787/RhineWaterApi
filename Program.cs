@@ -31,14 +31,17 @@ using (var scope = app.Services.CreateScope())
     
     // Автоматично изпълнява миграциите при старт
     db.Database.Migrate();
-
+    
+    db.StationConfigs.RemoveRange(db.StationConfigs);
+    db.SaveChanges();
+    
     if (!db.StationConfigs.Any())
     {
         db.StationConfigs.AddRange(new List<StationConfig>
         {
             //  ФОРМУЛИ (GlW 2022 данни за 2026г.)
             new() { StationName = "KONSTANZ-RHEIN", GlwCm = 223, GuaranteedDepthCm = 250 },
-            new() { StationName = "Basel-Rheinhalle", GlwCm = 490, GuaranteedDepthCm = 300 },
+            new() { StationName = "Basel-Rheinhalle", GlwCm = 401, GuaranteedDepthCm = 300 },
             new() { StationName = "RHEINWEILER", GlwCm = 205, GuaranteedDepthCm = 210 },
             new() { StationName = "BREISACH", GlwCm = 158, GuaranteedDepthCm = 210 },
             new() { StationName = "RUST", GlwCm = 65, GuaranteedDepthCm = 210 },
@@ -48,7 +51,7 @@ using (var scope = app.Services.CreateScope())
             new() { StationName = "PLITTERSDORF", GlwCm = 185, GuaranteedDepthCm = 210 },
             new() { StationName = "MAXAU", GlwCm = 300, GuaranteedDepthCm = 210 },
             new() { StationName = "PHILIPPSBURG", GlwCm = 165, GuaranteedDepthCm = 210 },
-            new() { StationName = "SPEYER", GlwCm = 161, GuaranteedDepthCm = 210 },
+            new() { StationName = "SPEYER", GlwCm = 237, GuaranteedDepthCm = 210 },
             new() { StationName = "MANNHEIM", GlwCm = 155, GuaranteedDepthCm = 210 },
             new() { StationName = "WORMS", GlwCm = 104, GuaranteedDepthCm = 210 },
             new() { StationName = "NIERSTEIN-OPPENHEIM", GlwCm = 145, GuaranteedDepthCm = 210 },
