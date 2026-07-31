@@ -15,9 +15,7 @@ builder.Services.AddCors(options =>
     });
 });
 // 1. Връзка с PostgreSQL
-//var connectionString = "Host=localhost;Database=RhineDb;Username=postgres;Password=stargate5286";
-var connectionString = "Host=ep-summer-rain-ayg6yglu.c-5.us-east-2.aws.neon.tech;Database=neondb;Username=neondb_owner;Password=npg_TlZLcsFb4rv6;SSL Mode=Require;Trust Server Certificate=true";
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")  ?? throw new Exception("DATABASE_URL not found");builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
 // 2. Регистрация на услуги
 builder.Services.AddHttpClient();
