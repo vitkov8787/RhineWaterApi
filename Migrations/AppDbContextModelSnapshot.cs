@@ -65,6 +65,9 @@ namespace RhineWaterApi.Migrations
                     b.Property<int>("GuaranteedDepthCm")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsMainStation")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("SafetyMarginCm")
                         .HasColumnType("integer");
 

@@ -117,3 +117,4 @@
 /Users/ivp23/Documents/Dev/Rhine/RhineWaterApi/obj/Debug/net10.0/RhineWaterApi.pdb
 /Users/ivp23/Documents/Dev/Rhine/RhineWaterApi/obj/Debug/net10.0/RhineWaterApi.genruntimeconfig.cache
 /Users/ivp23/Documents/Dev/Rhine/RhineWaterApi/obj/Debug/net10.0/ref/RhineWaterApi.dll
+/Users/ivp23/Documents/Dev/Rhine/RhineWaterApi/obj/Debug/net10.0/RhineWaterApi.sourcelink.json

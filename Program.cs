@@ -32,50 +32,76 @@ using (var scope = app.Services.CreateScope())
     // Автоматично изпълнява миграциите при старт
     db.Database.Migrate();
     
-    db.StationConfigs.RemoveRange(db.StationConfigs);
-    db.SaveChanges();
-    
+    //db.StationConfigs.RemoveRange(db.StationConfigs);
+    //db.SaveChanges();
+
     if (!db.StationConfigs.Any())
     {
         db.StationConfigs.AddRange(new List<StationConfig>
         {
-            //  ФОРМУЛИ (GlW 2022 данни за 2026г.)
-            new() { StationName = "KONSTANZ-RHEIN", GlwCm = 223, GuaranteedDepthCm = 250 },
-            new() { StationName = "Basel-Rheinhalle", GlwCm = 401, GuaranteedDepthCm = 300 },
-            new() { StationName = "RHEINWEILER", GlwCm = 205, GuaranteedDepthCm = 210 },
-            new() { StationName = "BREISACH", GlwCm = 158, GuaranteedDepthCm = 210 },
-            new() { StationName = "RUST", GlwCm = 65, GuaranteedDepthCm = 210 },
-            new() { StationName = "OTTENHEIM", GlwCm = 255, GuaranteedDepthCm = 210 },
-            new() { StationName = "KEHL-KRONENHOF", GlwCm = 160, GuaranteedDepthCm = 210 },
-            new() { StationName = "IFFEZHEIM", GlwCm = 105, GuaranteedDepthCm = 210 },
-            new() { StationName = "PLITTERSDORF", GlwCm = 185, GuaranteedDepthCm = 210 },
-            new() { StationName = "MAXAU", GlwCm = 300, GuaranteedDepthCm = 210 },
-            new() { StationName = "PHILIPPSBURG", GlwCm = 165, GuaranteedDepthCm = 210 },
-            new() { StationName = "SPEYER", GlwCm = 237, GuaranteedDepthCm = 210 },
-            new() { StationName = "MANNHEIM", GlwCm = 155, GuaranteedDepthCm = 210 },
-            new() { StationName = "WORMS", GlwCm = 104, GuaranteedDepthCm = 210 },
-            new() { StationName = "NIERSTEIN-OPPENHEIM", GlwCm = 145, GuaranteedDepthCm = 210 },
-            new() { StationName = "Bodenheim", GlwCm = 140, GuaranteedDepthCm = 210 },
-            new() { StationName = "MAINZ", GlwCm = 165, GuaranteedDepthCm = 210 },
-            new() { StationName = "OESTRICH", GlwCm = 87, GuaranteedDepthCm = 190 },
-            new() { StationName = "BINGEN", GlwCm = 79, GuaranteedDepthCm = 190 },
-            new() { StationName = "KAUB", GlwCm = 78, GuaranteedDepthCm = 190 },
-            new() { StationName = "SANKT GOAR", GlwCm = 78, GuaranteedDepthCm = 190 },
-            new() { StationName = "BOPPARD", GlwCm = 78, GuaranteedDepthCm = 210 },
-            new() { StationName = "BRAUBACH", GlwCm = 78, GuaranteedDepthCm = 210 },
-            new() { StationName = "KOBLENZ", GlwCm = 78, GuaranteedDepthCm = 210 },
-            new() { StationName = "Neuwied Stadt", GlwCm = 100, GuaranteedDepthCm = 210 },
-            new() { StationName = "ANDERNACH", GlwCm = 100, GuaranteedDepthCm = 210 },
-            new() { StationName = "OBERWINTER", GlwCm = 100, GuaranteedDepthCm = 210 },
-            new() { StationName = "BONN", GlwCm = 131, GuaranteedDepthCm = 250 },
-            new() { StationName = "KÖLN", GlwCm = 139, GuaranteedDepthCm = 250 },
-            new() { StationName = "DÜSSELDORF", GlwCm = 114, GuaranteedDepthCm = 250 },
-            new() { StationName = "DUISBURG-RUHRORT", GlwCm = 153, GuaranteedDepthCm = 250 },
-            new() { StationName = "WESEL", GlwCm = 138, GuaranteedDepthCm = 280 },
-            new() { StationName = "REES", GlwCm = 92, GuaranteedDepthCm = 280 },
-            new() { StationName = "EMMERICH", GlwCm = 7, GuaranteedDepthCm = 280 },
-            new() { StationName = "LOBITH", GlwCm = 595, GuaranteedDepthCm = 280 },
-            new() { StationName = "PANNERDENSE KOP", GlwCm = 560, GuaranteedDepthCm = 280 }
+            // === ГОРЕН РЕЙН ===
+            new() { StationName = "KONSTANZ-RHEIN", GlwCm = 223, GuaranteedDepthCm = 250, IsMainStation = false },
+            new() { StationName = "Basel-Rheinhalle", GlwCm = 501, GuaranteedDepthCm = 300, IsMainStation = false },
+            new() { StationName = "RHEINWEILER", GlwCm = 205, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "BREISACH", GlwCm = 158, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "RUST", GlwCm = 65, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "OTTENHEIM", GlwCm = 255, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "KEHL-KRONENHOF", GlwCm = 160, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "IFFEZHEIM", GlwCm = 105, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "PLITTERSDORF", GlwCm = 185, GuaranteedDepthCm = 210, IsMainStation = false },
+
+            // МАКСАУ (Главен пегел за Горен Рейн)
+            new() { StationName = "MAXAU", GlwCm = 372, GuaranteedDepthCm = 210, IsMainStation = true },
+            new() { StationName = "PHILIPPSBURG", GlwCm = 165, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "SPEYER", GlwCm = 237, GuaranteedDepthCm = 210, IsMainStation = false },
+
+            // МАНХАЙМ
+            new() { StationName = "MANNHEIM", GlwCm = 155, GuaranteedDepthCm = 210, IsMainStation = true },
+            new() { StationName = "WORMS", GlwCm = 68, GuaranteedDepthCm = 210, IsMainStation = false },
+
+            // === СРЕДЕН РЕЙН ===
+            new() { StationName = "NIERSTEIN-OPPENHEIM", GlwCm = 145, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "Bodenheim", GlwCm = 140, GuaranteedDepthCm = 210, IsMainStation = false },
+
+            // МАЙНЦ
+            new() { StationName = "MAINZ", GlwCm = 171, GuaranteedDepthCm = 210, IsMainStation = true },
+
+            // ЙОСТРИХ
+            new() { StationName = "OESTRICH", GlwCm = 92, GuaranteedDepthCm = 190, IsMainStation = true },
+            new() { StationName = "BINGEN", GlwCm = 97, GuaranteedDepthCm = 190, IsMainStation = false },
+            new() { StationName = "KAUB", GlwCm = 77, GuaranteedDepthCm = 190, IsMainStation = false },
+            new() { StationName = "SANKT GOAR", GlwCm = 77, GuaranteedDepthCm = 190, IsMainStation = false },
+            new() { StationName = "BOPPARD", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "BRAUBACH", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "KOBLENZ", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "Neuwied Stadt", GlwCm = 100, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "ANDERNACH", GlwCm = 91, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "OBERWINTER", GlwCm = 100, GuaranteedDepthCm = 210, IsMainStation = false },
+
+            // === ДОЛЕН РЕЙН ===
+            new() { StationName = "BONN", GlwCm = 142, GuaranteedDepthCm = 250, IsMainStation = false },
+
+            // КЬОЛН
+            new() { StationName = "KÖLN", GlwCm = 139, GuaranteedDepthCm = 250, IsMainStation = true },
+
+            // ДЮСЕЛДОРФ
+            new() { StationName = "DÜSSELDORF", GlwCm = 91, GuaranteedDepthCm = 250, IsMainStation = true },
+
+            // ДУИЗБУРГ
+            new() { StationName = "DUISBURG-RUHRORT", GlwCm = 227, GuaranteedDepthCm = 250, IsMainStation = true },
+            new() { StationName = "WESEL", GlwCm = 174, GuaranteedDepthCm = 250, IsMainStation = false },
+            new() { StationName = "REES", GlwCm = 118, GuaranteedDepthCm = 250, IsMainStation = false },
+            new() { StationName = "EMMERICH", GlwCm = 74, GuaranteedDepthCm = 250, IsMainStation = false },
+
+            // === ХОЛАНДСКИ УЧАСТЪК ===
+            new() { StationName = "LOBITH", GlwCm = 733, GuaranteedDepthCm = 280, IsMainStation = false },
+            new() { StationName = "PANNERDENSE KOP", GlwCm = 700, GuaranteedDepthCm = 280, IsMainStation = false },
+
+            // НАЙМИНГЕН (Nijmegen на река Ваал - Холандия)
+            new() { StationName = "NIJMEGEN", GlwCm = 520, GuaranteedDepthCm = 280, IsMainStation = true },
+
+            // ТИЛ (Вал Тил / Tiel на река Ваал - Холандия)
+            new() { StationName = "TIEL", GlwCm = 435, GuaranteedDepthCm = 280, IsMainStation = true }
         });
         db.SaveChanges();
     }

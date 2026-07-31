@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace RhineWaterApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreateRefactored : Migration
+    public partial class InitialCreateV2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +38,8 @@ namespace RhineWaterApi.Migrations
                     StationName = table.Column<string>(type: "text", nullable: false),
                     GlwCm = table.Column<int>(type: "integer", nullable: false),
                     GuaranteedDepthCm = table.Column<int>(type: "integer", nullable: false),
-                    SafetyMarginCm = table.Column<int>(type: "integer", nullable: false)
+                    SafetyMarginCm = table.Column<int>(type: "integer", nullable: false),
+                    IsMainStation = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

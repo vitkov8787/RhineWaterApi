@@ -7,4 +7,6 @@ public class StationConfig
     public int GlwCm { get; set; }
     public int GuaranteedDepthCm { get; set; }
     public int SafetyMarginCm { get; set; } = 30; // Твоят запас
+    
+    public bool IsMainStation { get; set; }
 }

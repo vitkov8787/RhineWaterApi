@@ -12,8 +12,8 @@ using RhineWaterApi.Data;
 namespace RhineWaterApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260731011605_InitialCreateRefactored")]
-    partial class InitialCreateRefactored
+    [Migration("20260731235902_InitialCreateV2")]
+    partial class InitialCreateV2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,6 +67,9 @@ namespace RhineWaterApi.Migrations
 
                     b.Property<int>("GuaranteedDepthCm")
                         .HasColumnType("integer");
+
+                    b.Property<bool>("IsMainStation")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("SafetyMarginCm")
                         .HasColumnType("integer");
