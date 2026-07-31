@@ -15,7 +15,8 @@ builder.Services.AddCors(options =>
     });
 });
 // 1. Връзка с PostgreSQL
-var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")  ?? throw new Exception("DATABASE_URL not found");builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")  ?? throw new Exception("DATABASE_URL not found");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
 // 2. Регистрация на услуги
 builder.Services.AddHttpClient();
