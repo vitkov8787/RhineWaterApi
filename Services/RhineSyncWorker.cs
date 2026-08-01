@@ -54,6 +54,59 @@ public class RhineSyncWorker : BackgroundService
             if (series?.CurrentMeasurement == null) continue;
 
             var utcTime = series.CurrentMeasurement.Timestamp.ToUniversalTime();
+            
+            
+            var levelCm =
+                (int)Math.Round(series.CurrentMeasurement.Value);
+
+            var config = await db.StationConfigs
+                .FirstOrDefaultAsync(c =>
+                    c.StationName.ToLower() == s.Name.ToLower());
+
+            if (config != null)
+            {
+                var channelDepth =
+                    (levelCm - config.GlwCm)
+                    + config.GuaranteedDepthCm;
+
+                var recommendedDraft =
+                    channelDepth - config.SafetyMarginCm;
+
+                var today =
+                    DateOnly.FromDateTime(DateTime.UtcNow);
+
+                var history =
+                    await db.DepthHistories.FirstOrDefaultAsync(h =>
+                        h.StationName == s.Name &&
+                        h.Date == today);
+
+                if (history == null)
+                {
+                    db.DepthHistories.Add(new DepthHistory
+                    {
+                        StationName = s.Name,
+                        Date = today,
+                        MinWaterLevelCm = levelCm,
+                        MinChannelDepthCm = channelDepth,
+                        MinRecommendedDraftCm = recommendedDraft,
+                        UpdatedAt = DateTime.UtcNow
+                    });
+                }
+                else
+                {
+                    history.MinWaterLevelCm =
+                        Math.Min(history.MinWaterLevelCm, levelCm);
+
+                    history.MinChannelDepthCm =
+                        Math.Min(history.MinChannelDepthCm, channelDepth);
+
+                    history.MinRecommendedDraftCm =
+                        Math.Min(history.MinRecommendedDraftCm, recommendedDraft);
+
+                    history.UpdatedAt = DateTime.UtcNow;
+                }
+            }
+            
             if (!await db.RhineLevels.AnyAsync(r => r.StationName == s.Name && r.MeasuredAt == utcTime))
             {
                 db.RhineLevels.Add(new RhineWaterLevel {
