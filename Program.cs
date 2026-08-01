@@ -31,9 +31,9 @@ using (var scope = app.Services.CreateScope())
     
     // Автоматично изпълнява миграциите при старт
     db.Database.Migrate();
-    
-    db.StationConfigs.RemoveRange(db.StationConfigs);
-    db.SaveChanges();
+    //seeding
+    //db.StationConfigs.RemoveRange(db.StationConfigs);
+    //db.SaveChanges();
 
     if (!db.StationConfigs.Any())
     {
