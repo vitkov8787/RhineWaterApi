@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RhineWaterApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5df58a200124e9a770d4ddd20207c69541840343")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b81444424d05fe9bdc203c2a427741db695e2e60")]
 [assembly: System.Reflection.AssemblyProductAttribute("RhineWaterApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RhineWaterApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
