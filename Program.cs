@@ -141,14 +141,18 @@ app.MapGet("/api/rhine/latest", async (AppDbContext db) =>
                 lastUpdate.Kilometer,
                 CurrentLevelCm = lastUpdate.LevelCm,
                 lastUpdate.MeasuredAt,
+
+                IsMainStation = config?.IsMainStation ?? false,
+
                 Calculation = config == null ? null : new
                 {
                     GlwReference = config.GlwCm,
                     Fahrrinnentiefe = config.GuaranteedDepthCm,
                     EstimatedTotalDepth = channelDepth,
                     RecommendedMaxDraft = maxDraft,
-                    SafetyReserve = config.SafetyMarginCm // Твоят запас е тук!
+                    SafetyReserve = config.SafetyMarginCm
                 },
+
                 Status = maxDraft switch
                 {
                     null => "No Configuration",
@@ -157,6 +161,7 @@ app.MapGet("/api/rhine/latest", async (AppDbContext db) =>
                     _ => "GOOD NAVIGATION"
                 }
             };
+
         })
         .OrderBy(r => r.Kilometer)
         .ToList();
