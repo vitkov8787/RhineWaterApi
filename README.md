@@ -10,7 +10,7 @@ API за мониторинг на нивата на река Рейн и изч
 ## 🛠 Технологичен стек
 - **Backend:** .NET 10 (C#)
 - **ORM:** Entity Framework Core
-- **Database:** PostgreSQL (Hosted on Render)
+- **Database:** PostgreSQL (Hosted on neon.tech)
 - **Data Source:** PegelOnline REST API v2
 - **IDE:** JetBrains Rider (macOS)
 
