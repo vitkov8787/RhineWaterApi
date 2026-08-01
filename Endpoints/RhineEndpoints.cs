@@ -10,66 +10,76 @@ public static class RhineEndpoints
     {
         var group = app.MapGroup("/api/rhine");
 
-        // 1. АКТУАЛНО СЪСТОЯНИЕ
-        group.MapGet("/latest", async (AppDbContext db) =>
-        {
-            var allLevels = await db.RhineLevels.AsNoTracking().ToListAsync();
-            var configs = await db.StationConfigs.AsNoTracking().ToListAsync();
+// 1. АКТУАЛНО СЪСТОЯНИЕ (ОПТИМИЗИРАНО)
+group.MapGet("/latest", async (AppDbContext db) =>
+{
+    // Вземаме само последното измерване за всяка станция директно чрез LINQ
+    // Това е много по-бързо, защото базата ни дава само 50-тина записа, а не 10 000
+    var latestLevels = await db.RhineLevels
+        .AsNoTracking()
+        .GroupBy(l => l.StationName)
+        .Select(g => g.OrderByDescending(x => x.MeasuredAt).FirstOrDefault())
+        .ToListAsync();
 
-            var result = allLevels
-                .GroupBy(l => l.StationName)
-                .Select(group =>
+    var configs = await db.StationConfigs.AsNoTracking().ToDictionaryAsync(c => c.StationName.ToLower());
+
+    var result = latestLevels
+        .Where(l => l != null)
+        .Select(l =>
+        {
+            configs.TryGetValue(l.StationName.ToLower(), out var config);
+
+            int? channelDepth = null;
+            int? maxDraft = null;
+
+            if (config != null)
+            {
+                channelDepth = (l.LevelCm - config.GlwCm) + config.GuaranteedDepthCm;
+                maxDraft = channelDepth - config.SafetyMarginCm;
+            }
+
+            return new
+            {
+                l.StationName,
+                l.Kilometer,
+                CurrentLevelCm = l.LevelCm,
+                l.MeasuredAt,
+                IsMainStation = config?.IsMainStation ?? false,
+                Calculation = config == null ? null : new
                 {
-                    var lastUpdate = group.OrderByDescending(l => l.MeasuredAt).First();
-                    var config = configs.FirstOrDefault(c => 
-                        c.StationName.Equals(lastUpdate.StationName, StringComparison.OrdinalIgnoreCase));
+                    GlwReference = config.GlwCm,
+                    Fahrrinnentiefe = config.GuaranteedDepthCm,
+                    EstimatedTotalDepth = channelDepth,
+                    RecommendedMaxDraft = maxDraft,
+                    SafetyReserve = config.SafetyMarginCm
+                },
+                Status = maxDraft switch
+                {
+                    null => "No Configuration",
+                    < 160 => "CRITICAL SHALLOW",
+                    < 230 => "RESTRICTED DRAFT",
+                    _ => "GOOD NAVIGATION"
+                }
+            };
+        })
+        .OrderBy(r => r.Kilometer)
+        .ToList();
 
-                    int? channelDepth = null;
-                    int? maxDraft = null;
+    return Results.Ok(result);
+});
 
-                    if (config != null)
-                    {
-                        channelDepth = (lastUpdate.LevelCm - config.GlwCm) + config.GuaranteedDepthCm;
-                        maxDraft = channelDepth - config.SafetyMarginCm;
-                    }
+// 2. ЦЯЛАТА ИСТОРИЯ (С ЛИМИТ)
+group.MapGet("/history", async (AppDbContext db) =>
+{
+    // Вземаме само последните 100 записа, за да не претоварим мрежата
+    var history = await db.RhineLevels
+        .AsNoTracking()
+        .OrderByDescending(r => r.MeasuredAt)
+        .Take(100) 
+        .ToListAsync();
 
-                    return new
-                    {
-                        lastUpdate.StationName,
-                        lastUpdate.Kilometer,
-                        CurrentLevelCm = lastUpdate.LevelCm,
-                        lastUpdate.MeasuredAt,
-                        IsMainStation = config?.IsMainStation ?? false,
-                        Calculation = config == null ? null : new
-                        {
-                            GlwReference = config.GlwCm,
-                            Fahrrinnentiefe = config.GuaranteedDepthCm,
-                            EstimatedTotalDepth = channelDepth,
-                            RecommendedMaxDraft = maxDraft,
-                            SafetyReserve = config.SafetyMarginCm
-                        },
-                        Status = maxDraft switch
-                        {
-                            null => "No Configuration",
-                            < 160 => "CRITICAL SHALLOW",
-                            < 230 => "RESTRICTED DRAFT",
-                            _ => "GOOD NAVIGATION"
-                        }
-                    };
-                })
-                .OrderBy(r => r.Kilometer)
-                .ToList();
-
-            return Results.Ok(result);
-        });
-
-        // 2. ЦЯЛАТА ИСТОРИЯ (за таблица)
-        group.MapGet("/history", async (AppDbContext db) =>
-        {
-            return Results.Ok(await db.RhineLevels.AsNoTracking()
-                .OrderByDescending(r => r.MeasuredAt)
-                .ToListAsync());
-        });
+    return Results.Ok(history);
+});
 
         // 3. ИСТОРИЯ ЗА ГРАФИКАТА (Важно за фронтенда!)
         group.MapGet("/depth-history", async (string station, int? days, AppDbContext db) =>
