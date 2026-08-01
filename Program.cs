@@ -70,13 +70,13 @@ using (var scope = app.Services.CreateScope())
             new() { StationName = "OESTRICH", GlwCm = 92, GuaranteedDepthCm = 190, IsMainStation = true },
             new() { StationName = "BINGEN", GlwCm = 97, GuaranteedDepthCm = 190, IsMainStation = false },
             new() { StationName = "KAUB", GlwCm = 77, GuaranteedDepthCm = 190, IsMainStation = true },
-            new() { StationName = "SANKT GOAR", GlwCm = 77, GuaranteedDepthCm = 190, IsMainStation = false },
+            new() { StationName = "SANKT GOAR", GlwCm = 166, GuaranteedDepthCm = 190, IsMainStation = false },
             new() { StationName = "BOPPARD", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = false },
-            new() { StationName = "BRAUBACH", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = false },
+           // new() { StationName = "BRAUBACH", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = false },
             new() { StationName = "KOBLENZ", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = true },
-            new() { StationName = "Neuwied Stadt", GlwCm = 100, GuaranteedDepthCm = 210, IsMainStation = false },
-            new() { StationName = "ANDERNACH", GlwCm = 91, GuaranteedDepthCm = 210, IsMainStation = false },
-            new() { StationName = "OBERWINTER", GlwCm = 100, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "Neuwied Stadt", GlwCm = 91, GuaranteedDepthCm = 250, IsMainStation = false },
+            new() { StationName = "ANDERNACH", GlwCm = 91, GuaranteedDepthCm = 250, IsMainStation = false },
+            new() { StationName = "OBERWINTER", GlwCm = 91, GuaranteedDepthCm = 250, IsMainStation = false },
 
             // === ДОЛЕН РЕЙН ===
             new() { StationName = "BONN", GlwCm = 142, GuaranteedDepthCm = 250, IsMainStation = false },
