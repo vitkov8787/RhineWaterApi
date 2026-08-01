@@ -91,14 +91,14 @@ using (var scope = app.Services.CreateScope())
             new() { StationName = "DUISBURG-RUHRORT", GlwCm = 227, GuaranteedDepthCm = 250, IsMainStation = true },
             new() { StationName = "WESEL", GlwCm = 174, GuaranteedDepthCm = 250, IsMainStation = false },
             new() { StationName = "REES", GlwCm = 118, GuaranteedDepthCm = 250, IsMainStation = false },
-            new() { StationName = "EMMERICH", GlwCm = 74, GuaranteedDepthCm = 250, IsMainStation = false },
+            new() { StationName = "EMMERICH", GlwCm = 74, GuaranteedDepthCm = 250, IsMainStation = true },
 
             // === ХОЛАНДСКИ УЧАСТЪК ===
-            new() { StationName = "LOBITH", GlwCm = 733, GuaranteedDepthCm = 280, IsMainStation = false },
+            new() { StationName = "LOBITH", GlwCm = 733, GuaranteedDepthCm = 280, IsMainStation = true },
             new() { StationName = "PANNERDENSE KOP", GlwCm = 700, GuaranteedDepthCm = 280, IsMainStation = false },
 
             // НАЙМИНГЕН (Nijmegen на река Ваал - Холандия)
-            new() { StationName = "NIJMEGEN", GlwCm = 520, GuaranteedDepthCm = 280, IsMainStation = true },
+            new() { StationName = "NIJMEGEN HAVEN", GlwCm = 520, GuaranteedDepthCm = 280, IsMainStation = true },
 
             // ТИЛ (Вал Тил / Tiel на река Ваал - Холандия)
             new() { StationName = "TIEL", GlwCm = 435, GuaranteedDepthCm = 280, IsMainStation = true }
