@@ -1,0 +1,20 @@
+## Специфично за .NET (Visual Studio / Rider)
+[Bb]in/
+[Oo]bj/
+[Tt]est[Cc]ontext[Rr]esults/
+[Vv]isual[Ss]tudio.Queries.nrbf
+
+## JetBrains Rider
+.idea/
+*.sln.iml
+*.idea.projectname
+atlassian-ide-plugin.xml
+
+## Visual Studio
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+
+## Конфигурации (по избор, за сигурност)
+appsettings.Development.json
