@@ -32,8 +32,8 @@ using (var scope = app.Services.CreateScope())
     // Автоматично изпълнява миграциите при старт
     db.Database.Migrate();
     //seeding
-    //db.StationConfigs.RemoveRange(db.StationConfigs);
-    //db.SaveChanges();
+    db.StationConfigs.RemoveRange(db.StationConfigs);
+    db.SaveChanges();
 
     if (!db.StationConfigs.Any())
     {
@@ -53,7 +53,7 @@ using (var scope = app.Services.CreateScope())
             // МАКСАУ (Главен пегел за Горен Рейн)
             new() { StationName = "MAXAU", GlwCm = 372, GuaranteedDepthCm = 210, IsMainStation = true },
             new() { StationName = "PHILIPPSBURG", GlwCm = 165, GuaranteedDepthCm = 210, IsMainStation = false },
-            new() { StationName = "SPEYER", GlwCm = 237, GuaranteedDepthCm = 210, IsMainStation = false },
+            new() { StationName = "SPEYER", GlwCm = 237, GuaranteedDepthCm = 210, IsMainStation = true },
 
             // МАНХАЙМ
             new() { StationName = "MANNHEIM", GlwCm = 155, GuaranteedDepthCm = 210, IsMainStation = true },
