@@ -42,7 +42,7 @@ public class RhineSyncWorker : BackgroundService
         // 2. Теглене от API
         var client = _httpClientFactory.CreateClient();
         client.DefaultRequestHeaders.Add("User-Agent", "RhineApp/1.0");
-        var url = "https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?waters=RHEIN&includeTimeseries=true&includeCurrentMeasurement=true";
+        var url = "https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?waters=RHEIN,WAAL&includeTimeseries=true&includeCurrentMeasurement=true";
         
         var apiData = await client.GetFromJsonAsync<List<PegelStationDto>>(url);
         if (apiData == null) return;
