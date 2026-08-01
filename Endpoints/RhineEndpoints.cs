@@ -99,14 +99,18 @@ public static class RhineEndpoints
         // 4. СПИСЪК СЪС СТАНЦИИ
         group.MapGet("/stations", async (AppDbContext db) =>
         {
-            var stations = await db.DepthHistories
+            var configs = await db.StationConfigs
                 .AsNoTracking()
-                .Select(x => x.StationName)
-                .Distinct()
-                .OrderBy(x => x)
+                .Select(x => new 
+                {
+                    x.StationName,
+                    x.GlwCm,
+                    x.GuaranteedDepthCm
+                })
+                .OrderBy(x => x.StationName)
                 .ToListAsync();
 
-            return Results.Ok(stations);
+            return Results.Ok(configs);
         });
     }
 }
