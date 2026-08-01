@@ -74,9 +74,9 @@ using (var scope = app.Services.CreateScope())
             new() { StationName = "BOPPARD", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = false },
            // new() { StationName = "BRAUBACH", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = false },
             new() { StationName = "KOBLENZ", GlwCm = 77, GuaranteedDepthCm = 210, IsMainStation = true },
-            new() { StationName = "Neuwied Stadt", GlwCm = 91, GuaranteedDepthCm = 250, IsMainStation = false },
+            new() { StationName = "Neuwied Stadt", GlwCm = 100, GuaranteedDepthCm = 250, IsMainStation = false },
             new() { StationName = "ANDERNACH", GlwCm = 91, GuaranteedDepthCm = 250, IsMainStation = false },
-            new() { StationName = "OBERWINTER", GlwCm = 91, GuaranteedDepthCm = 250, IsMainStation = false },
+            new() { StationName = "OBERWINTER", GlwCm = 100, GuaranteedDepthCm = 250, IsMainStation = false },
 
             // === ДОЛЕН РЕЙН ===
             new() { StationName = "BONN", GlwCm = 142, GuaranteedDepthCm = 250, IsMainStation = false },
