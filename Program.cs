@@ -32,8 +32,8 @@ using (var scope = app.Services.CreateScope())
     // Автоматично изпълнява миграциите при старт
     db.Database.Migrate();
     //seeding
-    //db.StationConfigs.RemoveRange(db.StationConfigs);
-    //db.SaveChanges();
+    db.StationConfigs.RemoveRange(db.StationConfigs);
+    db.SaveChanges();
 
     if (!db.StationConfigs.Any())
     {
@@ -98,10 +98,10 @@ using (var scope = app.Services.CreateScope())
             new() { StationName = "PANNERDENSE KOP", GlwCm = 700, GuaranteedDepthCm = 280, IsMainStation = false },
 
             // НАЙМИНГЕН (Nijmegen на река Ваал - Холандия)
-            new() { StationName = "NIJMEGEN HAVEN", GlwCm = 520, GuaranteedDepthCm = 280, IsMainStation = true },
+            new() { StationName = "NIJMEGEN HAVEN", GlwCm = 516, GuaranteedDepthCm = 280, IsMainStation = true },
 
             // ТИЛ (Вал Тил / Tiel на река Ваал - Холандия)
-            new() { StationName = "TIEL", GlwCm = 435, GuaranteedDepthCm = 280, IsMainStation = true }
+            new() { StationName = "TIEL", GlwCm = 255, GuaranteedDepthCm = 280, IsMainStation = true }
         });
         db.SaveChanges();
     }
