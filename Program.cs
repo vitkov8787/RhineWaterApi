@@ -175,4 +175,47 @@ app.MapGet("/api/rhine/history", async (AppDbContext db) =>
     return Results.Ok(await db.RhineLevels.AsNoTracking().OrderByDescending(r => r.MeasuredAt).ToListAsync());
 });
 
+//3. История
+app.MapGet("/api/rhine/depth-history", async (
+    string station,
+    int? days,
+    AppDbContext db) =>
+{
+    var query = db.DepthHistories
+        .AsNoTracking()
+        .Where(x => x.StationName == station);
+
+    if (days.HasValue)
+    {
+        var fromDate = DateOnly.FromDateTime(
+            DateTime.UtcNow.AddDays(-days.Value));
+
+        query = query.Where(x => x.Date >= fromDate);
+    }
+
+    var result = await query
+        .OrderBy(x => x.Date)
+        .Select(x => new
+        {
+            x.Date,
+            x.MinWaterLevelCm,
+            x.MinChannelDepthCm,
+            x.MinRecommendedDraftCm
+        })
+        .ToListAsync();
+
+    return Results.Ok(result);
+});
+//4. списък
+app.MapGet("/api/rhine/stations", async (AppDbContext db) =>
+{
+    var stations = await db.DepthHistories
+        .AsNoTracking()
+        .Select(x => x.StationName)
+        .Distinct()
+        .OrderBy(x => x)
+        .ToListAsync();
+
+    return Results.Ok(stations);
+});
 app.Run();
